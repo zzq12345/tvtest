@@ -1,46 +1,53 @@
 on:
- on:
   workflow_dispatch:
     inputs:
       name:
         description: 'iptvtest'
         required: true
-       
+
 jobs:
   build:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo apt-get update
-        sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
-        cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
-        pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
-        sudo timedatectl set-timezone "$TIME_ZONE"
-        sudo apt-get install ca-certificates curl
-        sudo install -m 0755 -d /etc/apt/keyrings
-        sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-        sudo chmod a+r /etc/apt/keyrings/docker.asc
-        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-        sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-        # Add the repository to Apt sources:
-        # Add Docker's official GPG key:
-         sudo apt-get install ca-certificates curl
-        sudo install -m 0755 -d /etc/apt/keyrings
-         sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-         sudo chmod a+r /etc/apt/keyrings/docker.asc
+      - name: Checkout
+        uses: actions/checkout@v2
 
-# Add the repository to Apt sources:
-      echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-        sudo docker pull pixman/pixman
-        sudo docker run -d --name=pixman -p 5000:5000 pixman/pixman
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
+            cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
+            pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
+          
+          # Set timezone (replace $TIME_ZONE with actual timezone)
+          sudo timedatectl set-timezone "$TIME_ZONE"
+
+          # Install Docker dependencies
+          sudo apt-get install -y \
+            ca-certificates curl
+
+          # Add Docker's GPG key
+          sudo install -m 0755 -d /etc/apt/keyrings
+          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+          # Add Docker repository to Apt sources
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+          # Update apt and install Docker packages
+          sudo apt-get update
+          sudo apt-get install -y \
+            docker-ce \
+            docker-ce-cli \
+            containerd.io \
+            docker-buildx-plugin \
+            docker-compose
+
+          # Pull and run Docker image
+          sudo docker pull pixman/pixman
+          sudo docker run -d --name=pixman -p 5000:5000 pixman/pixman
