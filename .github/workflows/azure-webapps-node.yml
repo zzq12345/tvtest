@@ -65,6 +65,7 @@ jobs:
           # Add Docker repository to Apt sources
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
             sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          
           # Update apt and install Docker packages
           sudo apt-get update
           sudo apt-get install -y \
@@ -77,6 +78,7 @@ jobs:
           sudo docker pull pixman/pixman
             - name: Run Docker container
             docker run -d --name pixman -p 5000:5000 pixman/pixman
-          while sleep 60; do echo "Still running..."; done
+          while sleep 60; 
+          do echo "Still running..."; done
   
           
