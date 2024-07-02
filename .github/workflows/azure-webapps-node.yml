@@ -23,8 +23,7 @@ jobs:
             cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
             pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
           
-          # Set timezone (replace $TIME_ZONE with actual timezone)
-          sudo timedatectl set-timezone "$TIME_ZONE"
+         
 
           # Install Docker dependencies
           sudo apt-get install -y \
