@@ -80,7 +80,9 @@ jobs:
 
           # Run Docker container
           sudo docker run -d --name pixman -p 5000:5000 pixman/pixman
-
+        - name: Test Docker container
+        run: |
+          curl http://localhost:5000
           # Output message to indicate the container is running
           echo "Docker container pixman is running."
 
