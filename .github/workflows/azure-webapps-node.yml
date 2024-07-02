@@ -77,6 +77,8 @@ jobs:
 
           # Pull Docker image
           sudo docker pull pixman/pixman
-
-          # Run Docker container with restart policy
-          sudo docker run -d --restart always --name pixman -p 5000:5000 pixman/pixman
+            - name: Run Docker container
+            docker run -d --name pixman -p 5000:5000 pixman/pixman
+          while sleep 60; do echo "Still running..."; done
+  
+          
