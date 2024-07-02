@@ -78,18 +78,20 @@ jobs:
           # Pull Docker image
           sudo docker pull pixman/pixman
 
-             - name: Run Docker container
-                  run: |
-          docker run -d --name pixman -p 5000:5000 pixman/pixman
+      - name: Run Docker container
+        run: |
           sudo docker run -d --name pixman -p 5000:5000 pixman/pixman
-         
-               - name: Test Docker container
-                  run: |
+
+      - name: Test Docker container
+        run: |
           curl http://localhost:5000
-          # Output message to indicate the container is running
+
+      - name: Output message
+        run: |
           echo "Docker container pixman is running."
 
-          # Add a long running task to keep the job active (optional)
+      - name: Keep job active
+        run: |
           while sleep 60; do
             echo "Still running..."
           done
