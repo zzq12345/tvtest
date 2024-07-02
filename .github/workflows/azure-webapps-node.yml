@@ -84,6 +84,7 @@ jobs:
 
       - name: Test Docker container
         run: |
+         sleep 10  # 等待 10 秒钟
           curl http://localhost:5000
 
       - name: Output message
