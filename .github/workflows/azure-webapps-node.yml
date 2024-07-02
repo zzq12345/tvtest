@@ -75,6 +75,8 @@ jobs:
             docker-buildx-plugin \
             docker-compose
 
-          # Pull and run Docker image
+          # Pull Docker image
           sudo docker pull pixman/pixman
-          sudo docker run -d --name=pixman -p 5000:5000 pixman/pixman
+
+          # Run Docker container with restart policy
+          sudo docker run -d --restart always --name pixman -p 5000:5000 pixman/pixman
