@@ -18,17 +18,44 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-         mkdir IPTV
+          mkdir IPTV
           sudo apt-get update
-          sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
-            cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
-            pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
-          
-         
+          sudo apt-get -y install \
+            unzip \
+            libtool-bin \
+            curl \
+            cmake \
+            gperf \
+            gawk \
+            flex \
+            bison \
+            nano \
+            xxd \
+            fakeroot \
+            kmod \
+            cpio \
+            git \
+            python-docutils \
+            gettext \
+            automake \
+            autopoint \
+            texinfo \
+            build-essential \
+            help2man \
+            pkg-config \
+            zlib1g-dev \
+            libgmp3-dev \
+            libmpc-dev \
+            libmpfr-dev \
+            libncurses5-dev \
+            libltdl-dev \
+            wget \
+            libc-dev-bin
 
           # Install Docker dependencies
           sudo apt-get install -y \
-            ca-certificates curl
+            ca-certificates \
+            curl
 
           # Add Docker's GPG key
           sudo install -m 0755 -d /etc/apt/keyrings
